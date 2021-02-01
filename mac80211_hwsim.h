@@ -84,6 +84,8 @@ enum {
 	HWSIM_CMD_NEW_RADIO,
 	HWSIM_CMD_DEL_RADIO,
 	HWSIM_CMD_GET_RADIO,
+	HWSIM_YAWMD_TX_INFO,
+	HWSIM_YAWMD_RX_INFO,
 	__HWSIM_CMD_MAX,
 };
 #define HWSIM_CMD_MAX (_HWSIM_CMD_MAX - 1)
@@ -161,6 +163,10 @@ enum {
 	HWSIM_ATTR_PERM_ADDR,
 	HWSIM_ATTR_IFTYPE_SUPPORT,
 	HWSIM_ATTR_CIPHER_SUPPORT,
+	HWSIM_ATTR_FRAME_HEADER,
+	HWSIM_ATTR_FRAME_LENGTH,
+	HWSIM_ATTR_FRAME_ID,
+	HWSIM_ATTR_RECEIVER_INFO,
 	__HWSIM_ATTR_MAX,
 };
 #define HWSIM_ATTR_MAX (__HWSIM_ATTR_MAX - 1)
@@ -245,4 +251,11 @@ struct hwsim_tx_rate_flag {
 	s8 idx;
 	u16 flags;
 } __packed;
+
+
+struct hwsim_itf_recv_info {
+ 	u8 mac_addr[ETH_ALEN];
+ 	u32 signal;
+} __packed __aligned(1);
+
 #endif /* __MAC80211_HWSIM_H */
