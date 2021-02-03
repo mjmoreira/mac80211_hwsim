@@ -74,6 +74,10 @@ enum hwsim_tx_control_flags {
  * @HWSIM_CMD_DEL_RADIO: destroy a radio, reply is multicasted
  * @HWSIM_CMD_GET_RADIO: fetch information about existing radios, uses:
  *	%HWSIM_ATTR_RADIO_ID
+ * @HWSIM_YAWMD_TX_INFO: message sent to yawmd, with information to perform the
+ * 	simulation
+ * @HWSIM_YAWMD_RX_INFO: message received from yawmd, with the results of the
+ * 	simulation
  * @__HWSIM_CMD_MAX: enum limit
  */
 enum {
@@ -133,6 +137,10 @@ enum {
  * @HWSIM_ATTR_PERM_ADDR: permanent mac address of new radio
  * @HWSIM_ATTR_IFTYPE_SUPPORT: u32 attribute of supported interface types bits
  * @HWSIM_ATTR_CIPHER_SUPPORT: u32 array of supported cipher types
+ * @HWSIM_ATTR_FRAME_HEADER: frame header, used by yawmd
+ * @HWSIM_ATTR_FRAME_LENGTH: frame length in bytes, used by yawmd 
+ * @HWSIM_ATTR_FRAME_ID: u64 unique identifier of a frame, used with yawmd
+ * @HWSIM_ATTR_RECEIVER_INFO: array of struct itf_recv_info/hwsim_itf_recv_info
  * @__HWSIM_ATTR_MAX: enum limit
  */
 
@@ -252,7 +260,13 @@ struct hwsim_tx_rate_flag {
 	u16 flags;
 } __packed;
 
-
+/**
+ * struct hwsim_itf_recv_info
+ * 
+ * Used in the messages HWSIM_YAWMD_RX_INFO sent by yawmd.
+ * Information of the struct means that interface .mac_addr should receive a
+ * copy of the frame (the message HWSIM_YAWMD_RX_INFO refers to) with .signal.
+ */
 struct hwsim_itf_recv_info {
  	u8 mac_addr[ETH_ALEN];
  	u32 signal;
